@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".NotesListActivity">
 
-    
+
 
 </android.support.constraint.ConstraintLayout>
