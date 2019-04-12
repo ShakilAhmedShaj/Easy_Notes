@@ -15,7 +15,7 @@ public class NotesListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes_list);
 
-        Note note = new Note("some title","some content","time");
+        Note note = new Note("some title", "some content", "time");
 
         Log.d(TAG, "onCreate: my note" + note.toString());
     }
