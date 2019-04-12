@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".NotesListActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerView"
+        android:orientation="vertical"
+        android:padding="5dp">
 
+    </android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>
