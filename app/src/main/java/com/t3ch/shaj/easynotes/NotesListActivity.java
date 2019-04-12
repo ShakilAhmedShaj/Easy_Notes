@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.t3ch.shaj.easynotes.adapters.NotesRecyclerAdapter;
 import com.t3ch.shaj.easynotes.models.Note;
+import com.t3ch.shaj.easynotes.util.VerticalSpacingItemDecorator;
 
 import java.util.ArrayList;
 
@@ -35,8 +36,8 @@ public class NotesListActivity extends AppCompatActivity {
 
     }
 
-    private void insertFakeNotes(){
-        for(int i = 0; i < 1000; i++){
+    private void insertFakeNotes() {
+        for (int i = 0; i < 1000; i++) {
             Note note = new Note();
             note.setTitle("title #" + i);
             note.setContent("content #: " + i);
@@ -46,11 +47,15 @@ public class NotesListActivity extends AppCompatActivity {
         mNoteRecyclerAdapter.notifyDataSetChanged();
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
         mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(10);
+        mRecyclerView.addItemDecoration(itemDecorator);
+
         mNoteRecyclerAdapter = new NotesRecyclerAdapter(mNotes);
         mRecyclerView.setAdapter(mNoteRecyclerAdapter);
 
