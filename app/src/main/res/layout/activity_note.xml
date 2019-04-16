@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightYellow"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/lightYellow">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -11,21 +12,22 @@
         android:background="@color/colorPrimaryDark">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/note_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/note_toolbar">
 
+            <include layout="@layout/layout_note_toolbar"/>
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
     <EditText
-        android:id="@+id/note_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp"
+        android:id="@+id/note_text"
+        android:textSize="23sp"
         android:textColor="#000"
-        android:textSize="23sp" />
+        android:padding="5dp"/>
 
 </LinearLayout>
