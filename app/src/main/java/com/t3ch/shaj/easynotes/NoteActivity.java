@@ -1,11 +1,13 @@
 package com.t3ch.shaj.easynotes;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -56,6 +58,7 @@ public class NoteActivity extends AppCompatActivity implements
         } else {
             // this is note a new note (VIEW MODE)
             setNoteProperties();
+            disableContentInteraction();
         }
         setListeners();
 
@@ -86,6 +89,7 @@ public class NoteActivity extends AppCompatActivity implements
         return true;
     }
 
+
     private void enableEditMode() {
         mBackArrowContainer.setVisibility(View.GONE);
         mCheckContainer.setVisibility(View.VISIBLE);
@@ -95,6 +99,16 @@ public class NoteActivity extends AppCompatActivity implements
 
         mMode = EDIT_MODE_ENABLED;
 
+        enableContentInteraction();
+
+    }
+
+    private void enableContentInteraction() {
+        mLineEditText.setKeyListener(new EditText(this).getKeyListener());
+        mLineEditText.setFocusable(true);
+        mLineEditText.setFocusableInTouchMode(true);
+        mLineEditText.setCursorVisible(true);
+        mLineEditText.requestFocus();
     }
 
     private void disableEditMode() {
@@ -107,6 +121,35 @@ public class NoteActivity extends AppCompatActivity implements
 
         mMode = EDIT_MODE_DISABLED;
 
+        disableContentInteraction();
+
+
+    }
+
+    private void hideKeyboard() {
+
+//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//        View view = this.getCurrentFocus();
+//        if (view != null) {
+//            view = new View(this);
+//        }
+//        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+
+    private void disableContentInteraction() {
+        mLineEditText.setKeyListener(null);
+        mLineEditText.setFocusable(false);
+        mLineEditText.setFocusableInTouchMode(false);
+        mLineEditText.setCursorVisible(false);
+        mLineEditText.clearFocus();
     }
 
     private void setNoteProperties() {
@@ -187,7 +230,10 @@ public class NoteActivity extends AppCompatActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.toolbar_check: {
+
+                hideKeyboard();
                 disableEditMode();
+
                 break;
             }
             case R.id.note_text_title: {
