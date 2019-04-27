@@ -26,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top"
+        android:imeOptions="flagNoExtractUi"
         android:padding="5dp"
         android:textColor="#000"
         android:textSize="23sp" />
