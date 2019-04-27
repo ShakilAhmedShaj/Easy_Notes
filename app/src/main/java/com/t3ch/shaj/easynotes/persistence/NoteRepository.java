@@ -28,11 +28,10 @@ public class NoteRepository {
 
     }
 
-    public LiveData<List<Note>> retrieveNoteTask(Note note) {
-
-        return null;
-
+    public LiveData<List<Note>> retrieveNotesTask() {
+        return mNoteDatabase.getNoteDao().getNotes();
     }
+
 
     public void deleteNoteTask(Note note) {
 

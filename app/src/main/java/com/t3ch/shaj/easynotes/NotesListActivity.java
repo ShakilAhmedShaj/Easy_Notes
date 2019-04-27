@@ -1,6 +1,8 @@
 package com.t3ch.shaj.easynotes;
 
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,9 +15,11 @@ import android.view.View;
 
 import com.t3ch.shaj.easynotes.adapters.NotesRecyclerAdapter;
 import com.t3ch.shaj.easynotes.models.Note;
+import com.t3ch.shaj.easynotes.persistence.NoteRepository;
 import com.t3ch.shaj.easynotes.util.VerticalSpacingItemDecorator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NotesListActivity extends AppCompatActivity implements
         NotesRecyclerAdapter.OnNoteListener,
@@ -29,6 +33,7 @@ public class NotesListActivity extends AppCompatActivity implements
     //vars
     private ArrayList<Note> mNotes = new ArrayList<>();
     private NotesRecyclerAdapter mNoteRecyclerAdapter;
+    private NoteRepository mNoteRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +44,38 @@ public class NotesListActivity extends AppCompatActivity implements
 
         findViewById(R.id.fab).setOnClickListener(this);
 
+        mNoteRepository = new NoteRepository(this);
+
         initRecyclerView();
-        insertFakeNotes();
+        retrieveNotes();
+        //insertFakeNotes();
 
         setSupportActionBar((Toolbar) findViewById(R.id.notes_toolbar));
         setTitle("Notes");
 
 
     }
+
+    private void retrieveNotes() {
+
+        mNoteRepository.retrieveNotesTask().observe(this, new Observer<List<Note>>() {
+            @Override
+            public void onChanged(@Nullable List<Note> notes) {
+
+
+                if (mNotes.size() > 0) {
+                    mNotes.clear();
+                }
+                if (notes != null) {
+                    mNotes.addAll(notes);
+                }
+                mNoteRecyclerAdapter.notifyDataSetChanged();
+
+            }
+        });
+
+    }
+
 
     private void insertFakeNotes() {
         for (int i = 0; i < 1000; i++) {
