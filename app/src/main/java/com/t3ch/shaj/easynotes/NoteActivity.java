@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.t3ch.shaj.easynotes.models.Note;
 
 public class NoteActivity extends AppCompatActivity implements
-        View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
+        View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, View.OnClickListener {
 
     //ui components
     private LineEditText mLineEditText;
@@ -66,6 +66,9 @@ public class NoteActivity extends AppCompatActivity implements
         mLineEditText.setOnTouchListener(this);
 
         mGestureDetector = new GestureDetector(this, this);
+
+        mCheck.setOnClickListener(this);
+        mViewTitle.setOnClickListener(this);
 
     }
 
@@ -178,5 +181,31 @@ public class NoteActivity extends AppCompatActivity implements
 
 
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.toolbar_check: {
+                disableEditMode();
+                break;
+            }
+            case R.id.note_text_title: {
+                enableEditMode();
+                mEditTitle.requestFocus();
+                mEditTitle.setSelection(mEditTitle.length());
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (mMode == EDIT_MODE_ENABLED) {
+            onClick(mCheck);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
