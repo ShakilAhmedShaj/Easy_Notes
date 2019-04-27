@@ -73,6 +73,8 @@ public class NoteActivity extends AppCompatActivity implements
         mCheck.setOnClickListener(this);
         mViewTitle.setOnClickListener(this);
 
+        mBackArrow.setOnClickListener(this);
+
     }
 
 
@@ -240,6 +242,11 @@ public class NoteActivity extends AppCompatActivity implements
                 enableEditMode();
                 mEditTitle.requestFocus();
                 mEditTitle.setSelection(mEditTitle.length());
+                break;
+            }
+
+            case R.id.toolbar_back_arrow: {
+                finish();
                 break;
             }
         }
