@@ -3,6 +3,7 @@ package com.t3ch.shaj.easynotes.persistence;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
+import com.t3ch.shaj.easynotes.async.DeleteAsyncTask;
 import com.t3ch.shaj.easynotes.async.InsertAsyncTask;
 import com.t3ch.shaj.easynotes.models.Note;
 
@@ -37,6 +38,8 @@ public class NoteRepository {
 
 
     public void deleteNoteTask(Note note) {
+
+        new DeleteAsyncTask(mNoteDatabase.getNoteDao()).execute(note);
 
     }
 }

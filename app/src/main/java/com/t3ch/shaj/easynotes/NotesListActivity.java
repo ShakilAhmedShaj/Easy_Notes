@@ -130,6 +130,7 @@ public class NotesListActivity extends AppCompatActivity implements
     private void deleteNote(Note note) {
         mNotes.remove(note);
         mNoteRecyclerAdapter.notifyDataSetChanged();
+        mNoteRepository.deleteNoteTask(note);
     }
 
     ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
