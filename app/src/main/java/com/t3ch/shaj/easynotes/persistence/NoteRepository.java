@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.t3ch.shaj.easynotes.async.DeleteAsyncTask;
 import com.t3ch.shaj.easynotes.async.InsertAsyncTask;
+import com.t3ch.shaj.easynotes.async.UpdateAsyncTask;
 import com.t3ch.shaj.easynotes.models.Note;
 
 import java.util.List;
@@ -29,6 +30,8 @@ public class NoteRepository {
     }
 
     public void updateNoteTask(Note note) {
+
+        new UpdateAsyncTask(mNoteDatabase.getNoteDao()).execute(note);
 
     }
 

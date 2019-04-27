@@ -90,7 +90,13 @@ public class NoteActivity extends AppCompatActivity implements
     private boolean getIncomingIntent() {
         if (getIntent().hasExtra("selected_note")) {
             mInitialNote = getIntent().getParcelableExtra("selected_note");
-            mNoteFinal = getIntent().getParcelableExtra("selected_note");
+
+            mNoteFinal = new Note();
+            mNoteFinal.setTitle(mInitialNote.getTitle());
+            mNoteFinal.setContent(mInitialNote.getContent());
+            mNoteFinal.setTimestamp(mInitialNote.getTimestamp());
+            mNoteFinal.setId(mInitialNote.getId());
+
             mMode = EDIT_MODE_DISABLED;
 
             mIsNewNote = false;
@@ -107,8 +113,14 @@ public class NoteActivity extends AppCompatActivity implements
             saveNewNote();
         } else {
             // update note
+            updateNotes();
         }
     }
+
+    private void updateNotes() {
+        mNoteRepository.updateNoteTask(mNoteFinal);
+    }
+
 
     private void saveNewNote() {
 
