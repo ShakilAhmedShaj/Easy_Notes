@@ -32,6 +32,7 @@ public class NoteActivity extends AppCompatActivity implements
     private GestureDetector mGestureDetector;
     private int mMode;
     private NoteRepository mNoteRepository;
+    private Note mNoteFinal;
 
     private static final String TAG = "NoteActivity";
     private static final int EDIT_MODE_ENABLED = 1;
@@ -85,6 +86,7 @@ public class NoteActivity extends AppCompatActivity implements
     private boolean getIncomingIntent() {
         if (getIntent().hasExtra("selected_note")) {
             mInitialNote = getIntent().getParcelableExtra("selected_note");
+            mNoteFinal = getIntent().getParcelableExtra("selected_note");
             mMode = EDIT_MODE_DISABLED;
 
             mIsNewNote = false;
@@ -96,7 +98,7 @@ public class NoteActivity extends AppCompatActivity implements
     }
 
     private void saveChanges() {
-        
+
         if (mIsNewNote) {
             saveNewNote();
         } else {
@@ -106,7 +108,7 @@ public class NoteActivity extends AppCompatActivity implements
 
     private void saveNewNote() {
 
-        mNoteRepository.insertNoteTask(mInitialNote);
+        mNoteRepository.insertNoteTask(mNoteFinal);
     }
 
 
@@ -142,6 +144,26 @@ public class NoteActivity extends AppCompatActivity implements
         mMode = EDIT_MODE_DISABLED;
 
         disableContentInteraction();
+
+
+        // Check if they typed anything into the note. Don't want to save an empty note.
+        String temp = mLineEditText.getText().toString();
+        temp = temp.replace("\n", "");
+        temp = temp.replace(" ", "");
+        if (temp.length() > 0) {
+            mNoteFinal.setTitle(mEditTitle.getText().toString());
+            mNoteFinal.setContent(mLineEditText.getText().toString());
+            String timestamp = "Jan 2019";
+            mNoteFinal.setTimestamp(timestamp);
+
+            // If the note was altered, save it.
+            if (!mNoteFinal.getContent().equals(mInitialNote.getContent())
+                    || !mNoteFinal.getTitle().equals(mInitialNote.getTitle())) {
+                saveChanges();
+            }
+        }
+
+
         saveChanges();
 
 
@@ -186,6 +208,11 @@ public class NoteActivity extends AppCompatActivity implements
 
         mViewTitle.setText("Note Title");
         mEditTitle.setText("Note Title");
+
+        mNoteFinal = new Note();
+        mInitialNote = new Note();
+        mInitialNote.setTitle("Note Title");
+        mNoteFinal.setTitle("Note Title");
 
 
     }
