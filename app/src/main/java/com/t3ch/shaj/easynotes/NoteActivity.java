@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.t3ch.shaj.easynotes.models.Note;
 import com.t3ch.shaj.easynotes.persistence.NoteRepository;
+import com.t3ch.shaj.easynotes.util.Utility;
 
 public class NoteActivity extends AppCompatActivity implements
         View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, View.OnClickListener, TextWatcher {
@@ -156,7 +157,7 @@ public class NoteActivity extends AppCompatActivity implements
         if (temp.length() > 0) {
             mNoteFinal.setTitle(mEditTitle.getText().toString());
             mNoteFinal.setContent(mLineEditText.getText().toString());
-            String timestamp = "Jan 2019";
+            String timestamp = Utility.getCurrentTimeStamp();
             mNoteFinal.setTimestamp(timestamp);
 
             // If the note was altered, save it.

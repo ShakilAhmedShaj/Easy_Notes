@@ -2,6 +2,7 @@ package com.t3ch.shaj.easynotes.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,11 @@ import android.widget.TextView;
 
 import com.t3ch.shaj.easynotes.R;
 import com.t3ch.shaj.easynotes.models.Note;
+import com.t3ch.shaj.easynotes.util.Utility;
 
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by Shakil Ahmed Shaj on 12-Apr-19.
@@ -38,8 +42,16 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        viewHolder.timestamp.setText(mNotes.get(i).getTimestamp());
-        viewHolder.title.setText(mNotes.get(i).getTitle());
+        try {
+            String month = mNotes.get(i).getTimestamp().substring(0, 2);
+            month = Utility.getMonthFromNumber(month);
+            String year = mNotes.get(i).getTimestamp().substring(3);
+            String timestamp = month + " " + year;
+            viewHolder.timestamp.setText(timestamp);
+            viewHolder.title.setText(mNotes.get(i).getTitle());
+        } catch (NullPointerException e) {
+            Log.e(TAG, "onBindViewHolder: Null Pointer: " + e.getMessage());
+        }
 
     }
 
