@@ -3,6 +3,8 @@ package com.t3ch.shaj.easynotes;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -17,7 +19,7 @@ import com.t3ch.shaj.easynotes.models.Note;
 import com.t3ch.shaj.easynotes.persistence.NoteRepository;
 
 public class NoteActivity extends AppCompatActivity implements
-        View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, View.OnClickListener {
+        View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, View.OnClickListener, TextWatcher {
 
     //ui components
     private LineEditText mLineEditText;
@@ -79,6 +81,7 @@ public class NoteActivity extends AppCompatActivity implements
         mViewTitle.setOnClickListener(this);
 
         mBackArrow.setOnClickListener(this);
+        mEditTitle.addTextChangedListener(this);
 
     }
 
@@ -162,9 +165,6 @@ public class NoteActivity extends AppCompatActivity implements
                 saveChanges();
             }
         }
-
-
-        saveChanges();
 
 
     }
@@ -321,5 +321,22 @@ public class NoteActivity extends AppCompatActivity implements
         if (mMode == EDIT_MODE_ENABLED) {
             enableEditMode();
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        mViewTitle.setText(s.toString());
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }
