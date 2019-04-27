@@ -11,15 +11,13 @@ import com.t3ch.shaj.easynotes.models.Note;
 public class NoteActivity extends AppCompatActivity {
 
     //ui components
-
     private LineEditText mLineEditText;
     private EditText mEditTitle;
     private TextView mViewTitle;
 
     //vars
-
     private boolean mIsNewNote;
-
+    private Note mInitialNote;
 
     private static final String TAG = "NoteActivity";
 
@@ -34,15 +32,19 @@ public class NoteActivity extends AppCompatActivity {
 
         if (getIncomingIntent()) {
             // this is a new note (EDIT MODE)
+
+            setNewNoteProperties();
+
         } else {
             // this is note a new note (VIEW MODE)
+            setNoteProperties();
         }
 
     }
 
     private boolean getIncomingIntent() {
         if (getIntent().hasExtra("selected_note")) {
-            Note incomingNote = getIntent().getParcelableExtra("selected_note");
+            mInitialNote = getIntent().getParcelableExtra("selected_note");
 
 
             mIsNewNote = false;
@@ -50,5 +52,23 @@ public class NoteActivity extends AppCompatActivity {
         }
         mIsNewNote = true;
         return true;
+    }
+
+
+    private void setNoteProperties() {
+
+        mViewTitle.setText(mInitialNote.getTitle());
+        mEditTitle.setText(mInitialNote.getTitle());
+        mLineEditText.setText(mInitialNote.getContent());
+
+
+    }
+
+    private void setNewNoteProperties() {
+
+        mViewTitle.setText("Note Title");
+        mEditTitle.setText("Note Title");
+
+
     }
 }
