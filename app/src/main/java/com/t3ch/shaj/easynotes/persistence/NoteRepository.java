@@ -3,6 +3,7 @@ package com.t3ch.shaj.easynotes.persistence;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
+import com.t3ch.shaj.easynotes.async.InsertAsyncTask;
 import com.t3ch.shaj.easynotes.models.Note;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public class NoteRepository {
     }
 
     public void insertNoteTask(Note note) {
+
+        new InsertAsyncTask(mNoteDatabase.getNoteDao()).execute(note);
 
     }
 

@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.t3ch.shaj.easynotes.models.Note;
+import com.t3ch.shaj.easynotes.persistence.NoteRepository;
 
 public class NoteActivity extends AppCompatActivity implements
         View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, View.OnClickListener {
@@ -30,6 +31,7 @@ public class NoteActivity extends AppCompatActivity implements
     private Note mInitialNote;
     private GestureDetector mGestureDetector;
     private int mMode;
+    private NoteRepository mNoteRepository;
 
     private static final String TAG = "NoteActivity";
     private static final int EDIT_MODE_ENABLED = 1;
@@ -48,6 +50,8 @@ public class NoteActivity extends AppCompatActivity implements
         mBackArrow = findViewById(R.id.toolbar_back_arrow);
         mCheckContainer = findViewById(R.id.check_container);
         mBackArrowContainer = findViewById(R.id.back_arrow_container);
+
+        mNoteRepository = new NoteRepository(this);
 
         if (getIncomingIntent()) {
             // this is a new note (EDIT MODE)
@@ -91,6 +95,20 @@ public class NoteActivity extends AppCompatActivity implements
         return true;
     }
 
+    private void saveChanges() {
+        
+        if (mIsNewNote) {
+            saveNewNote();
+        } else {
+            // update note
+        }
+    }
+
+    private void saveNewNote() {
+
+        mNoteRepository.insertNoteTask(mInitialNote);
+    }
+
 
     private void enableEditMode() {
         mBackArrowContainer.setVisibility(View.GONE);
@@ -124,6 +142,7 @@ public class NoteActivity extends AppCompatActivity implements
         mMode = EDIT_MODE_DISABLED;
 
         disableContentInteraction();
+        saveChanges();
 
 
     }
