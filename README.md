@@ -1,4 +1,4 @@
-##Easy Notes - Android App
+## Easy Notes - Android App
 <p align="center">Note Taking App using Android Jetpack - Room Persistence Library</p>
 
 <img src="https://user-images.githubusercontent.com/15268903/80812278-71bbdf00-8be9-11ea-9cd0-71e1c4231698.png" height="400" width="200"> <img src="https://user-images.githubusercontent.com/15268903/80812282-7385a280-8be9-11ea-8af3-d9ab5770722c.png" height="400" width="200"> <img src="https://user-images.githubusercontent.com/15268903/80812285-741e3900-8be9-11ea-96ca-245aca8f32ec.png" height="400" width="200"> 
